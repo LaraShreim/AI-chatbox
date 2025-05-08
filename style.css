@@ -26,4 +26,11 @@ body{
     display:flex;
     align-items:center;
     background: #317cec;
+    padding: 15px 22px;
+    justify-content: space-between;
+}
+.chatbot-header .header-info{
+    display:flex;
+    gap:10px;
+    align-items:center;
 }
