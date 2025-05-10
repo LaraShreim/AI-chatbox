@@ -1,5 +1,6 @@
 const chatbody = document.querySelector(".chatbot-body")
 const messageInput = document.querySelector(".message-input");
+const sendMessageButton = document.querySelector("#send-message");
 
 const createMessageElement = (content, classes) => {
     const div = document.createElement("div");
@@ -10,7 +11,6 @@ const createMessageElement = (content, classes) => {
 
 const handleOutgoingMessage = (userMessage) => {
     const messageContent = `<div class="message-text">${userMessage}</div>`;
-    
     const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
     chatbody.appendChild(outgoingMessageDiv);
 }
@@ -18,6 +18,6 @@ const handleOutgoingMessage = (userMessage) => {
 messageInput.addEventListener("keydown", (e) => {
     const userMessage = e.target.value.trim();
     if(e.key === "Enter" && userMessage) {
-        console.log(userMessage);
+        handleOutgoingMessage(userMessage);
     }
 })
