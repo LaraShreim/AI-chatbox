@@ -118,7 +118,7 @@ body{
     width: 7px;
     border-radius: 50%;
     background:#317cec;
-    /*animation: dotPulse 1.8s ease-in-out infinite;*/
+    animation: dotPulse 2s ease-in-out infinite;
 }
 .chatbot-body .bot-message .thinking-indicator .dot:nth-child(1){
     animation-delay: 0.2s;
