@@ -2,7 +2,7 @@ const chatbody = document.querySelector(".chatbot-body")
 const messageInput = document.querySelector(".message-input");
 const sendMessageButton = document.querySelector("#send-message");
 
-const API_KEY = "AIzaSyCFiAoNOLB-K0-RQ8IvQ-vs2NIOgzdjCPE";
+const API_KEY = "AIzaSyAtsF41Y89b6abDKokdq0SP-94YUneJOYg";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 const userData = {
@@ -32,12 +32,17 @@ const generateBotResponse = async (incomingMessageDiv) => {
         const data = await response.json();
         if(!response.ok) throw new Error(data.error.message);
 
-        const apiResponseText = data.candidates[0].content.parts[0].text.trim();
+        const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>").trim();
         messageElement.innerText = apiResponseText;
 
     } catch (error) {
         console.log(error);
+        messageElement.innerText = apiResponseText;
     
+    } finally {
+        incomingMessageDiv.classList.remove("thinking");
+        chatbody.scrollTo({top: chatbody.scrollHeight, behavior: "smooth" });
+
     }
 
 }
@@ -52,6 +57,7 @@ const handleOutgoingMessage = (e) => {
     const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
     outgoingMessageDiv.querySelector(".message-text").textContent = userData.message;
     chatbody.appendChild(outgoingMessageDiv);
+    chatbody.scrollTo({top: chatbody.scrollHeight, behavior: "smooth" });
 
     setTimeout(() => {
         const messageContent = ` <svg class="bot-avatar" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 1024 1024">
@@ -66,8 +72,9 @@ const handleOutgoingMessage = (e) => {
                 </div>`;
 
         const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
-        chatbody.appendChild(incomingMessageDiv);  
-        generateBotResponse();
+        chatbody.appendChild(incomingMessageDiv);
+        chatbody.scrollTo({top: chatbody.scrollHeight, behavior: "smooth" });
+        generateBotResponse(incomingMessageDiv);
 
     }, 600);
 }
@@ -75,7 +82,7 @@ const handleOutgoingMessage = (e) => {
 messageInput.addEventListener("keydown", (e) => {
     const userMessage = e.target.value.trim();
     if(e.key === "Enter" && userMessage) {
-        handleOutgoingMessage(userMessage);
+        handleOutgoingMessage(e);
     }
 });
 

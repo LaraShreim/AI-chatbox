@@ -69,6 +69,8 @@ body{
     margin-bottom: 82px;
     overflow-y: auto;
     flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: #317cec #fff transparent;
 }
 .chatbot-body .message{
     display: flex;
