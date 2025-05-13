@@ -3,6 +3,7 @@ const messageInput = document.querySelector(".message-input");
 const sendMessageButton = document.querySelector("#send-message");
 const fileInput = document.querySelector("#file-input");
 const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
+const fileCancelButton  = document.querySelector("#cancel-file");
 
 
 const API_KEY = "AIzaSyAtsF41Y89b6abDKokdq0SP-94YUneJOYg";
@@ -62,6 +63,7 @@ const handleOutgoingMessage = (e) => {
     e.preventDefault();
     userData.message = messageInput.value.trim();
     messageInput.value = "";
+    fileUploadWrapper.classList.remove("file-uploaded");
 
     const messageContent = `<div class="message-text"></div>
     ${userData.file.data ? `<img src="data:${userData.file.mime_type};base64,
@@ -117,6 +119,11 @@ fileInput.addEventListener("change", (e) => {
     }
 
     reader.readAsDataURL(file);
+});
+
+fileCancelButton.addEventListener("click", () => {
+    userData.file = {};
+    fileUploadWrapper.classList.remove("file-uploaded");
 });
 
 sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
